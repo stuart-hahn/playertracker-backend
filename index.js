@@ -1,6 +1,24 @@
+require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+const mongoose = require('mongoose')
+
+const password = process.env.DB_PASS
+
+const url = `mongodb+srv://fullstack:${password}@cluster0.t97qm.mongodb.net/player-tracker-app?retryWrites=true&w=majority`
+
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+
+const playerSchema = new mongoose.Schema({
+  name: String,
+  url: String,
+  wins: Number,
+  losses: Number,
+  titles: Number
+})
+
+const Player = mongoose.model('Player', playerSchema)
 
 const app = express()
 
@@ -45,8 +63,10 @@ app.get('/info', (req, res) => {
 })
 
 // GET all players
-app.get('/api/players', (req, res) => {
-  res.json(players)
+app.get('/api/players', (request, response) => {
+  Player.find({}).then(notes => {
+    response.json(notes)
+  })
 })
 
 // GET single player resource
