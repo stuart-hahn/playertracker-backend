@@ -1,25 +1,37 @@
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
+
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 app.use(morgan('tiny'))
 
 let players = [
   {
     id: 1,
     name: "slump",
-    url: "twitch.tv/slumpcity"
+    url: "twitch.tv/slumpcity",
+    wins: 7,
+    losses: 3,
+    titles: 1
   },
   {
     id: 2,
     name: "antcap24",
-    url: "twitch.tv/antcap24"
+    url: "twitch.tv/antcap24",
+    wins: 3,
+    losses: 7,
+    titles: 0
   },
   {
     id: 3,
     name: "rocketz",
-    url: "muthead.com"
+    url: "muthead.com",
+    wins: 0,
+    losses: 0,
+    titles: 0
   },
 ]
 
@@ -93,7 +105,7 @@ app.delete('/api/players/:id', (req, res) => {
   res.status(204).end()
 })
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`)
 })
