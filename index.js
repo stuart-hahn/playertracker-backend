@@ -36,10 +36,6 @@ let players = [
   },
 ]
 
-app.get('/', (req, res) => {
-  res.send('<h1>Playter Tracker App</h1>')
-})
-
 // GET info about API
 app.get('/info', (req, res) => {
   const date = new Date()
