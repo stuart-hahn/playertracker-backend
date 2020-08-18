@@ -2,23 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
-const mongoose = require('mongoose')
-
-const password = process.env.DB_PASS
-
-const url = `mongodb+srv://fullstack:${password}@cluster0.t97qm.mongodb.net/player-tracker-app?retryWrites=true&w=majority`
-
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-
-const playerSchema = new mongoose.Schema({
-  name: String,
-  url: String,
-  wins: Number,
-  losses: Number,
-  titles: Number
-})
-
-const Player = mongoose.model('Player', playerSchema)
+const Note = require('./models/player')
 
 const app = express()
 
@@ -122,7 +106,7 @@ app.delete('/api/players/:id', (req, res) => {
   res.status(204).end()
 })
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`)
 })
